@@ -1,0 +1,3 @@
+cd D:\SourceCodes\Study\Interview\javase\target\classes
+d:
+java -javaagent:D:\SourceCodes\Study\Interview\javase\out\Greeting.jar="Hello, Sample" instrumentation.Sample

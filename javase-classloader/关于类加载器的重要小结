@@ -1,0 +1,22 @@
+1. 关于 NoClassDefFoundError 和 ClassNotFoundException，有两个比较直观的例子：
+
+前提：假设要load一个class，包路径为com.xiao.haha.demo,class类名为Sample，
+场景1：如果loadclass时文件夹路径写错了，com.xiao.haha.demo写成com.xiao.hehe.demo，在底层创建文件输入流时会filenotfound，这时就会出现ClassNotFoundException异常
+场景2：如果loadclass时文件夹是对的，在com.xiao.haha.demo目录下找到Sample类了，就是说Sample类的全名是com.xiao.haha.demo.Sample;但是该类是从其他地方拷贝过来的，以前的包名是com.xiao.hehe.demo，编译后class字节码中的包信息也是这个。这时就会出现输入参数的类全名与字节码中的包信息不一致，提示NoClassDefFoundError。
+【注】:参见D:\SourceCodes\Study\Interview\javase-classloader这个工程下的javase.classloader.verifyproxypattern.ClassIdentity这个类
+
+
+2. 关于同目录下《深入探讨 Java 类加载器 -（算是总体介绍；评论看完很有收获）》这篇文章，小结如下：
+
+如果ClassIdentity这个类要加载的Sample与其在同一个project，那么在使用FileSystemClassLoader加载Sample时，会首先委托给FileSystemClassLoader的父类加载器去加载。这么说即使两个不同的FileSystemClassLoader实例去加载Sample时，因为都委托给了父类加载器，又有缓存机制，其实这两个类是由同一个类加载器加载的同一个类，可以通过obj1.getClass().getClassLoader()得到
+
+针对上边的问题有两种解决方法：
+a、在FileSystemClassLoader的构造器中通过super(null);语句将其parent设为null
+public FileSystemClassLoader(String rootDir) {
+super(null);//DevonKing 修改的
+this.rootDir = rootDir;
+}
+
+b、将Sample类转移到另一个project中去，使得sun.misc.Launcher$AppClassLoader无法加载到。比如例子中转移到D:\SourceCodes\folderforclass\javase\classloader\verifyproxypattern目录下了。 
+【备注】即使我们在ClassIdentity类中指定了要在D:\SourceCodes\folderforclass这个路径下寻找加载Sample类，如果本工程下的这个类未删掉，其FileSystemClassLoader的父类加载器AppClassLoader依然可以加载到这个类，所以两个不同实例加载的Sample仍然相同。
+

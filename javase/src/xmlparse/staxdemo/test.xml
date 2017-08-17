@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cve xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns="http://cve.mitre.org/cve/downloads"
+     xsi:noNamespaceSchemaLocation="http://cve.mitre.org/schema/cve/cve_1.0.xsd">
+<item type="CVE" name="CVE-1999-0002" seq="1999-0002">
+<status>Entry</status>
+<desc>Buffer overflow in NFS mountd gives root access to remote attackers, mostly in Linux systems.</desc>
+<refs>
+<ref source="SGI" url="ftp://patches.sgi.com/support/free/security/advisories/19981006-01-I">19981006-01-I</ref>
+<ref source="CERT">CA-98.12.mountd</ref>
+<ref source="CIAC" url="http://www.ciac.org/ciac/bulletins/j-006.shtml">J-006</ref>
+<ref source="BID" url="http://www.securityfocus.com/bid/121">121</ref>
+<ref source="XF">linux-mountd-bo</ref>
+</refs>
+</item>
+
+</cve>

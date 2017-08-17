@@ -1,0 +1,15 @@
+总结：
+
+java中protected 
+
+1. protected 访问控制符能被用于方法和成员变量。 
+2. 声明为protected的方法和成员变量能被同一个包里的所有类所访问，就像默认修饰符package一样。 
+3. 能被该类的子类所访问，子类可以和父类不在一个包中。 
+    这样，当你想让一个类中的某个方法或成员变量在包中都可见，而且其子类也能访问（子类有可能和父类不在同一个包中）但又不想让所有类都可以访问该类时，就可以用protected修饰符。 
+    可访问性： 
+    public > protected > package >private 
+
+    注意： 
+    4. But a subclass in another package can access the protected members in the super-class via only the references of subclass or its subclasses. 
+    A subclass in the same package doesn’t have this restriction. This ensures that classes from other packages are accessing only the members that are part of their inheritance hierarchy. 
+           第4点说明，就算在子类中，也只能通过子类（或子类的子类）的引用来访问父类中的protected方法和成员变量. 
